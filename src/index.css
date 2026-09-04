@@ -1,0 +1,71 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 250 247 242;
+  --bg-edge: 243 238 230;
+  --card: 253 252 250;
+  --border: 228 221 208;
+  --text: 27 42 74;
+  --text-muted: 92 100 120;
+  --gold: 184 147 95;
+  --risk-alto: 193 93 66;
+  --risk-medio: 192 138 46;
+  --risk-futuro: 92 122 153;
+  --risk-baixo: 125 148 113;
+}
+
+.dark {
+  --bg: 26 31 46;
+  --bg-edge: 21 24 31;
+  --card: 35 42 61;
+  --border: 60 69 96;
+  --text: 237 233 224;
+  --text-muted: 168 162 150;
+  --gold: 212 175 106;
+  --risk-alto: 217 119 87;
+  --risk-medio: 217 164 65;
+  --risk-futuro: 124 155 184;
+  --risk-baixo: 148 173 135;
+}
+
+* {
+  border-color: rgb(var(--border) / 0.5);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(180deg, rgb(var(--bg)) 0%, rgb(var(--bg-edge)) 100%);
+  color: rgb(var(--text));
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.dark body {
+  background: radial-gradient(circle at 50% 0%, rgb(var(--bg)) 0%, rgb(var(--bg-edge)) 100%);
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: "Playfair Display", Georgia, serif;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--border) / 0.6);
+  border-radius: 999px;
+}
+
+.dot-grid {
+  background-image: radial-gradient(rgb(var(--gold) / 0.18) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
