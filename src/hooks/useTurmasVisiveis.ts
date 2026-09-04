@@ -17,14 +17,17 @@ export function useTurmasVisiveis(): ResultadoTurmasVisiveis {
   const [carregando, setCarregando] = useState(true);
 
   useEffect(() => {
+    let cancelado = false;
+
     async function carregar() {
       if (!profile || !usuarioAutorizado) {
-        setCarregando(false);
+        if (!cancelado) setCarregando(false);
         return;
       }
 
       if (profile.papel === "coordenador" || usuarioAutorizado.acesso_turmas === "todas") {
         const { data } = await supabase.from("alunos_dados").select("turma").eq("aprovado", true);
+        if (cancelado) return;
         const distintas = Array.from(new Set((data ?? []).map((d) => d.turma))).sort();
         setTurmas(distintas);
         setTodasLiberadas(true);
@@ -48,6 +51,9 @@ export function useTurmasVisiveis(): ResultadoTurmasVisiveis {
     }
 
     carregar();
+    return () => {
+      cancelado = true;
+    };
   }, [profile, usuarioAutorizado]);
 
   return { turmas, todasLiberadas, bloqueado, carregando };

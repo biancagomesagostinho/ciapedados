@@ -7,9 +7,11 @@ export function useAlertaAltoRisco() {
   const [quantidade, setQuantidade] = useState(0);
 
   useEffect(() => {
+    let cancelado = false;
+
     async function carregar() {
       if (carregando || bloqueado) {
-        setQuantidade(0);
+        if (!cancelado) setQuantidade(0);
         return;
       }
 
@@ -21,17 +23,20 @@ export function useAlertaAltoRisco() {
 
       if (!todasLiberadas) {
         if (turmas.length === 0) {
-          setQuantidade(0);
+          if (!cancelado) setQuantidade(0);
           return;
         }
         query = query.in("turma", turmas);
       }
 
       const { count } = await query;
-      setQuantidade(count ?? 0);
+      if (!cancelado) setQuantidade(count ?? 0);
     }
 
     carregar();
+    return () => {
+      cancelado = true;
+    };
   }, [turmas, todasLiberadas, bloqueado, carregando]);
 
   return quantidade;
